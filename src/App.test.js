@@ -12,3 +12,4 @@ it('mounts Dashboard without crashing', () => {
   const wrapper = shallow(<Dashboard />)
   wrapper.unmount()
 })
+

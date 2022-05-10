@@ -1,48 +1,45 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+//import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   CButtonGroup,
   CFormCheck,
   CContainer,
   CHeader,
-  CHeaderBrand,
   CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
-  CNavLink,
-  CNavItem,
-} from '@coreui/react-pro'
-import CIcon from '@coreui/icons-react'
-import { cilApplicationsSettings, cilMenu, cilMoon, cilSun } from '@coreui/icons'
+} from "@coreui/react-pro";
+import CIcon from "@coreui/icons-react";
+import { cilApplicationsSettings, cilMoon, cilSun } from "@coreui/icons";
 
-import { AppBreadcrumb } from './index'
+//import { AppBreadcrumb } from "./index";
 
 import {
   AppHeaderDropdown,
-  AppHeaderDropdownMssg,
+  //AppHeaderDropdownMssg,
   AppHeaderDropdownNotif,
-  AppHeaderDropdownTasks,
-} from './header/index'
+  //AppHeaderDropdownTasks,
+} from "./header/index";
 
-import { logo } from 'src/assets/brand/logo'
+//import { logo } from "src/assets/brand/logo";
 
 const AppHeader = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state) => state.theme);
 
-  theme === 'dark'
-    ? document.body.classList.add('dark-theme')
-    : document.body.classList.remove('dark-theme')
+  theme === "dark"
+    ? document.body.classList.add("dark-theme")
+    : document.body.classList.remove("dark-theme");
 
-  const sidebarShow = useSelector((state) => state.sidebarShow)
-  const asideShow = useSelector((state) => state.asideShow)
+  //const sidebarShow = useSelector((state) => state.sidebarShow);
+  const asideShow = useSelector((state) => state.asideShow);
 
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
-        <CHeaderToggler
+        {/* <CHeaderToggler
           className="ps-1"
           onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
         >
@@ -63,52 +60,50 @@ const AppHeader = () => {
           <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem>
-        </CHeaderNav>
+        </CHeaderNav> */}
         <CHeaderNav className="ms-auto me-4">
           <CButtonGroup aria-label="Theme switch">
             <CFormCheck
               type="radio"
-              button={{ color: 'primary' }}
+              button={{ color: "primary" }}
               name="theme-switch"
               id="btn-light-theme"
               autoComplete="off"
               label={<CIcon icon={cilSun} />}
-              checked={theme === 'default'}
-              onChange={() => dispatch({ type: 'set', theme: 'light' })}
+              checked={theme === "default"}
+              onChange={() => dispatch({ type: "set", theme: "light" })}
             />
             <CFormCheck
               type="radio"
-              button={{ color: 'primary' }}
+              button={{ color: "primary" }}
               name="theme-switch"
               id="btn-dark-theme"
               autoComplete="off"
               label={<CIcon icon={cilMoon} />}
-              checked={theme === 'dark'}
-              onChange={() => dispatch({ type: 'set', theme: 'dark' })}
+              checked={theme === "dark"}
+              onChange={() => dispatch({ type: "set", theme: "dark" })}
             />
           </CButtonGroup>
         </CHeaderNav>
         <CHeaderNav>
           <AppHeaderDropdownNotif />
-          <AppHeaderDropdownTasks />
-          <AppHeaderDropdownMssg />
+          {/* <AppHeaderDropdownTasks /> */}
+          {/* <AppHeaderDropdownMssg /> */}
         </CHeaderNav>
         <CHeaderNav className="ms-3 me-4">
           <AppHeaderDropdown />
         </CHeaderNav>
         <CHeaderToggler
           className="px-md-0 me-md-3"
-          onClick={() => dispatch({ type: 'set', asideShow: !asideShow })}
+          onClick={() => dispatch({ type: "set", asideShow: !asideShow })}
         >
           <CIcon icon={cilApplicationsSettings} size="lg" />
         </CHeaderToggler>
       </CContainer>
       <CHeaderDivider />
-      <CContainer fluid>
-        <AppBreadcrumb />
-      </CContainer>
+      <CContainer fluid>{/* <AppBreadcrumb /> */}</CContainer>
     </CHeader>
-  )
-}
+  );
+};
 
-export default AppHeader
+export default AppHeader;

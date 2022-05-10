@@ -1,63 +1,30 @@
-import React, { Component, Suspense } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { CSpinner } from "@coreui/react-pro";
+import React,{ Component } from "react";
+//import { CSpinner } from "@coreui/react-pro";
 import "./scss/style.scss";
+import thunk from 'redux-thunk'
+import { createStore,compose, applyMiddleware } from 'redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/es/integration/react'
+import Routers from './navigation/router'
+import { Provider } from 'react-redux'
+import reducers from './store'
 
-// Containers
-const DefaultLayout = React.lazy(() => import("./layout/DefaultLayout"));
-
-// Pages
-const Login = React.lazy(() => import("./views/pages/login/Login"));
-const Register = React.lazy(() => import("./views/pages/register/Register"));
-const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
-const Page500 = React.lazy(() => import("./views/pages/page500/Page500"));
-
-// Email App
-const EmailApp = React.lazy(() => import("./views/apps/email/EmailApp"));
+let store = null
+const middleware = [thunk]
+store = compose(applyMiddleware(...middleware))(createStore)(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+let persistor = persistStore(store)
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Suspense fallback={<CSpinner color="primary" />}>
-          <Switch>
-            <Route
-              exact
-              path="/login"
-              name="Login Page"
-              render={(props) => <Login {...props} />}
-            />
-            <Route
-              exact
-              path="/register"
-              name="Register Page"
-              render={(props) => <Register {...props} />}
-            />
-            <Route
-              exact
-              path="/404"
-              name="Page 404"
-              render={(props) => <Page404 {...props} />}
-            />
-            <Route
-              exact
-              path="/500"
-              name="Page 500"
-              render={(props) => <Page500 {...props} />}
-            />
-            <Route
-              path="/apps/email"
-              name="Email App"
-              render={(props) => <EmailApp {...props} />}
-            />
-            <Route
-              path="/"
-              name="Home"
-              render={(props) => <DefaultLayout {...props} />}
-            />
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
+      <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Routers />
+      </PersistGate>
+    </Provider>
     );
   }
 }
